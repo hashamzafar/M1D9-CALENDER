@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8" />
+
+    <title>Calendar</title>
+
+    <link
+
+      rel="stylesheet"
+
+      href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
+
+    />
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <style></style>
+
+  </head>
+
+  <body>
+
+    <h1>Calendar</h1>
+
+    <div id="calendar">
+
+      <!-- day cells will be inserted here -->
+
+    </div>
+
+    <h1>Add Meeting</h1>
+
+    <!-- add event form sections -->
+
+    <div id="addMeeting">
+
+      <div>
+
+        <h4>Meeting Day</h4>
+
+        <h4 id="meeting-day">Click on a Day</h4>
+
+      </div>
+
+      <div>
+
+        <h4>Meeting Time</h4>
+
+        <input type="time" id="meeting-time" />
+
+      </div>
+
+      <div>
+
+        <h4>Meeting Name</h4>
+
+        <input
+
+          type="text"
+
+          id="meeting-name"
+
+          placeholder="Insert a name for the meeting"
+
+        />
+
+      </div>
+
+      <div>
+
+        <h4>Add</h4>
+
+        <button onclick="saveMeeting()">Save Meeting</button>
+
+      </div>
+
+    </div>
+
+    <div id="appointments">
+
+      <h1>Appointments for the day!</h1>
+
+      <ul id="appointment-list"></ul>
+
+    </div>
+<script>
+    let appointments = []
+
+
+
+
+
+
+
+    const dayInThisMonth = function(){
+        let now = new Date()
+        let LastDateOfTheMonth= new Date(
+            now.getFullYear(), 
+            now.getMonth()+ 1, 0)
+        let numberOfDays = LastDateOfTheMonth.getDate()
+        return numberOfDays
+
+    }
+
+const showAppointments = function(index){
+    let appointmentsToShow = appointments[index]
+
+    let appointmentList = document.getElementById('oppointment-list')
+    appointmentList.innerHTML = ''
+
+    for(let i=0;i< appointmentsToShow;i++){
+        let listItem = document.createElement('li')
+        listItem.innerText = appointmentsToShow[i]
+        appointmentList.appendChild(listItem)
+
+
+    }
+    document.getElementById('appointments').style.display = 'block'
+}
+
+
+
+    window.onload = function(){
+        let numberOfDays = dayInThisMonth()
+
+        let calendar = document.getElementById('calendar')
+        for(let i =0;i< numberOfDays;i++){
+            let cell = document.createElement('div')
+            cell.classList.add('day')
+
+            let day = document.createElement('h3')
+            day.innerText =i + 1
+            cell.appendChild(day)
+
+            calendar.appendChild(cell)
+
+            appointments[i] = []
+
+            cell.onclick= function(event){
+                let alreadySelectedElements = document.querySelector('.selected')
+                // if(alreadySelectedElements.length > 0){
+                    // for (let i = 0; i < alreadySelectedElements.length;i++){
+                    //     alreadySelectedElements[i].classList.remove('selected')
+                        if(alreadySelectedElements){
+                            alreadySelectedElements.classList.remove('selected')
+
+                        }
+                        event.currentTarget.classList.add('selected')
+
+                        let clickOnADayDivH4= document.getElementById('meeting-day')
+                        // clickOnADayDivH4.innerText = event.currentTarget.child[0].innerText
+                        clickOnADayDivH4.innerText = i + 1
+
+                        let todayAppointments = appointments[i]
+                        if(todayAppointments.length > 0){
+                            showAppointments(i)
+                        }else{
+                            document.getElementById('oppointments').style.display = 'none'
+
+                        }
+                    }
+                }
+                // event.currentTarget.classList.add('selected')
+            }
+
+        // }
+
+
+    // }
+const saveMeeting = function () {
+    let meetingDay = document.getElementById('meeting-day').innerText
+    let meetingTime = document.getElementById('meeting-time').value
+    let meetingName = document.getElementById('meeting-name').value
+    let eventString = meetingTime + ' - ' + meetingName
+    appointments[parseInt(meetingDay)- 1]
+    appointments[positionInAppointments].push(eventString)
+
+showAppointments(meetingDay - 1)
+
+}
+
+</script>
+  </body>
+
+</html>
+
